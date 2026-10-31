@@ -13,6 +13,16 @@ class TestsScreen extends StatelessWidget {
         backgroundColor: Colors.teal,
         foregroundColor: Colors.white,
       ),
+      ElevatedButton(
+  onPressed: () async {
+    final db = await DatabaseHelper().database;
+
+    final lignes = await db.query('produits');
+
+    debugPrint(lignes.toString());
+  },
+  child: const Text('Test : lire les produits'),
+),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [

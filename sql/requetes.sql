@@ -42,3 +42,12 @@ Papeterie	1
 1.1Résultat : CHECK constraint failed: prix >= 0
 1.2Résultat : FOREIGN KEY constraint failed
 1.3Résultat : FOREIGN KEY constraint failed
+-- Q5.1 : Tous les produits triés par nom
+SELECT *
+FROM produits
+ORDER BY nom ASC;
+
+-- Produit dont l'id vaut 3
+SELECT *
+FROM produits
+WHERE id = 3;

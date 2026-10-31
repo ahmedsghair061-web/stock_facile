@@ -55,3 +55,49 @@ Il n'est pas rappelé à chaque lancement de l'application. Il peut toutefois ê
 - Message onCreate : [copier le message affiché, ou indiquer qu'il ne s'affiche pas]
 - Nombre de catégories : [indiquer le nombre affiché]
 3.5/La méthode onCreate de SQLite est appelée uniquement lorsque la base de données est créée pour la première fois. Lorsque tu arrêtes puis relances l'application, le fichier de la base existe déjà sur le disque : SQLite le réutilise sans recréer les tables.
+Quel est le type exact du résultat ?
+List<Map<String, Object?>>
+
+
+Une ligne ressemble à ceci :
+{
+  id: 1,
+  nom: Télévision,
+  prix: 850.500,
+  quantite: 5,
+  disponible: 1,
+  date_ajout: 2026-10-30,
+  categorie_id: 2
+}
+
+
+Les valeurs sont des exemples : elles dépendent de ta base.
+
+b) Tester la modification :
+lignes.first['nom'] = 'Test';
+
+
+Tu obtiendras une erreur de type Unsupported operation: Cannot modify unmodifiable map.
+
+Déduction : les Map retournées par sqflite sont non modifiables. Il faut créer une nouvelle Map si on souhaite modifier les données en mémoire.
+
+c) Avec conversion :
+ElevatedButton(
+  onPressed: () async {
+    final produits = await ProduitDao().lireProduits();
+
+    for (var produit in produits) {
+      debugPrint(produit.toString());
+    }
+  },
+  child: const Text('Test : lire les produits'),
+),
+
+
+Pour obtenir un affichage intéressant, tu peux ajouter dans produit.dart :
+@override
+String toString() {
+  return 'Produit(id: $id, nom: $nom, prix: $prix, '
+      'quantite: $quantite, disponible: $disponible)';
+}
+initState() est exécuté une seule fois pendant la création de l'état du widget.

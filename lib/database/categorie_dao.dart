@@ -17,6 +17,46 @@ class TestsScreen extends StatelessWidget {
         foregroundColor: Colors.white,
         centerTitle: true,
       ),
+      Future<List<Categorie>> lireCategories() async {
+  final db = await DatabaseHelper().database;
+
+  final lignes = await db.query(
+    table,
+    orderBy: 'nom ASC',
+  );
+
+  return lignes.map((ligne) {
+    return Categorie.fromMap(ligne);
+  }).toList();
+}
+Future<Categorie?> lireCategorieParId(int id) async {
+  final db = await DatabaseHelper().database;
+
+  final lignes = await db.query(
+    table,
+    where: 'id = ?',
+    whereArgs: [id],
+    limit: 1,
+  );
+
+  return lignes.isEmpty
+      ? null
+      : Categorie.fromMap(lignes.first);
+}
+Future<Categorie?> lireCategorieParId(int id) async {
+  final db = await DatabaseHelper().database;
+
+  final lignes = await db.query(
+    table,
+    where: 'id = ?',
+    whereArgs: [id],
+    limit: 1,
+  );
+
+  return lignes.isEmpty
+      ? null
+      : Categorie.fromMap(lignes.first);
+}
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
